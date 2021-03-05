@@ -19,3 +19,5 @@ mkdir api-call-dataset
 cd api-call-dataset
 
 curl -o mal-api-2019.zip https://raw.githubusercontent.com/ocatak/malware_api_class/master/mal-api-2019.zip
+
+curl -o labels.csv https://raw.githubusercontent.com/ocatak/malware_api_class/master/labels.csv

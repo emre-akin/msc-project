@@ -2,8 +2,8 @@
 
 # Download data sets
 cd scripts/
-./datasets.sh
+./download.sh
 
-# API-Call-data set data processing
+# API-Call data set data processing
 cd ../datasets/api-call-dataset/
 python ../../scripts/api-call-dataset.py mal-api-2019.zip
