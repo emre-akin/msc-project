@@ -12,6 +12,8 @@ cd ember-dataset
 
 curl -o ember_dataset_2018_2.tar.bz2 https://ember.elastic.co/ember_dataset_2018_2.tar.bz2
 
+tar -xf ember_dataset_2018_2.tar.bz2
+
 ###################
 
 cd ..
