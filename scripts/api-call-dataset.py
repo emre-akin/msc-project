@@ -2,7 +2,7 @@ import sys
 from zipfile import PyZipFile
 import pandas as pd
 
-#Unzip referance: https://docs.python.org/3/library/zipfile.html
+# Unzip referance: https://docs.python.org/3/library/zipfile.html
 for zipLocation in sys.argv[1:]:
     pzf = PyZipFile(zipLocation)
     pzf.extractall()
@@ -15,11 +15,19 @@ labels = pd.read_csv("labels.csv", names=["Malware Type"])
 len(df)
 len(labels)
 
-df.join(labels)
-
+'''
+df.info(verbose=True)
 df.head(1)
+'''
+
+# Combine dataframes
+df = df.join(labels)
+
+'''
+df.head(10)
 df.describe()
 df.iloc[[0],[0]]
+'''
 
 # Create train and test data sets / 90% - 10%
 train = df[:6397]
