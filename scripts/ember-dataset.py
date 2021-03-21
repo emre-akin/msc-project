@@ -1,8 +1,10 @@
 import os
 import pandas as pd
+import gc
+import json
 
 # Change directory
-os.chdir('/datasets/ember-dataset/ember2018/')
+os.chdir('/datasets/ember-dataset/ember2018/')   # TODO change this
 os.listdir()
 features_path = []
 features_path = os.listdir()
@@ -12,52 +14,87 @@ pd.set_option('display.max_colwidth', None)
 # Create dictionary for features
 def create_dict(dc):
 
-    for i in dc:
-        if not "features" in i:
-            dc.remove(i)
+    return [i for i in dc if 'features' in i]
 
-    print(dc)
-    print(len(dc))
+def data_process(i):
 
-    # /TODO DELETE THIS
-    del dc[:5]
-    del dc[1:]
-    #
+    print('Processing ' + i)
+    
+    # Import Data set
+    df = pd.read_json(i, lines=True)
 
-    print(dc)
-    return dc
+    # Choose malicious files only
+    df = df[df.label == 1]
 
-def data_process(x):
+    # Drop columns except function calls
+    df.drop(df.columns[0:11], axis=1, inplace=True)
+    df.drop(df.columns[[1,2]], axis=1, inplace=True)
 
-    for i in x:
-        # Import Data set
-        df = pd.read_json(i, lines=True)
+    # Dataframe to json
+    df_json = df.to_json()
 
-        # Choose malicious files only
-        df = df[df.label == 1]
+    # Parse dataframe
+    df_parsed = json.loads(df_json)
 
-        # Drop columns except function calls
-        df.drop(df.columns[0:11], axis=1, inplace=True)
-        df.drop(df.columns[[1,2]], axis=1, inplace=True)
+    with open('pre-train.txt', 'a') as f:
+        for key, value in df_parsed.items():
+            for value , value_2 in value.items():
+                for value_2, value_3 in value_2.items():
+                    for item in value_3:
+                        _ = f.write('%s ' % item)
+                _ = f.write('\n')
 
-        # Save dataframe to csv if not empty
-        if not df.empty:
-            df.to_csv('pre-train.csv', mode='a')
+    # Garbage collection
+    #input('test')
+    del df
+    df = None
+    del df_json
+    df_json = None
+    del df_parsed
+    df_parsed = None
+    gc.collect()
 
+    # Save dataframe to csv if not empty
+    #if not df.empty:
+    #    df.to_csv('pre-train.csv', mode='a')
 
-create_dict(features_path)
-data_process(features_path)
-print(features_path)
+features_path = create_dict(features_path)
+print(len(features_path))
+print(features_path[2])
+for i in features_path:
+    data_process(features_path[i])
 
-# Testing
 '''
-df = pd.read_json('train_features_0.jsonl', lines=True)
+# Testing
+df = pd.read_json('train_features_5.jsonl', lines=True)
 df.drop(df.columns[0:11], axis=1, inplace=True)
 df.drop(df.columns[[1,2]], axis=1, inplace=True)
 df.info(verbose=True)
+
+len(df)
+
+df = df.head(1000)
 df.head(1)
 df.describe()
-df[df.sha256 == 'ec86d25cbc434941f369e595ae3726f742ed4fa4c0627da65fa026a5e9fa1ccc'].label
-len(df[df.label == 1])
-df.columns
+
+
+test = df.to_json()
+parsed = json.loads(test)
+#print(type(parsed))
+#json.dumps(parsed, indent=None)
+data = []
+
+with open('ember-test.txt', 'a') as f:
+    for key, value in parsed.items():
+        for value , value2 in value.items():
+            for value2, value3 in value2.items():
+                for item in value3:
+                    _ = f.write('%s ' % item)
+            _ = f.write('\n')
+                #data[key] = value
+
+del df
+del test
+del parsed
+gc.collect()
 '''
