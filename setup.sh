@@ -12,3 +12,5 @@ python ../../scripts/api-call-dataset.py mal-api-2019.zip
 
 cd ../ember-dataset/ember2018/
 python ../../../scripts/ember-dataset.py
+
+sed -i '/^[[:space:]]*$/d' pre-train.txt
