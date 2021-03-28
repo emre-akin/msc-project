@@ -18,17 +18,18 @@ def create_dict(dc):
 
 def data_process(i):
 
-    print('Processing ' + i)
+    print('Processing ', i)
     
     # Import Data set
     df = pd.read_json(i, lines=True)
 
-    # Choose malicious files only
-    df = df[df.label == 1]
+    # Drop unlabeled data
+    df.drop(df[df['label'] == -1].index, inplace=True)
 
-    # Drop columns except function calls
-    df.drop(df.columns[0:11], axis=1, inplace=True)
-    df.drop(df.columns[[1,2]], axis=1, inplace=True)
+    # Drop columns except function calls and labels
+    df.drop(df.columns[0:3], axis=1, inplace=True)
+    df.drop(df.columns[1:8], axis=1, inplace=True)
+    df.drop(df.columns[2:], axis=1, inplace=True)
 
     # Dataframe to json
     df_json = df.to_json()
@@ -36,15 +37,23 @@ def data_process(i):
     # Parse dataframe
     df_parsed = json.loads(df_json)
 
-    # Write to pre-train.txt
-    with open('pre-train.txt', 'a') as f:
-        for key, value in df_parsed.items():
-            for value , value_2 in value.items():
-                for value_2, value_3 in value_2.items():
-                    for item in value_3:
-                        _ = f.write('%s ' % item)
-                _ = f.write('\n')
+    # Write to source_dataset.txt
+    with open('source_dataset.txt', 'a') as f:
 
+        imports = df_parsed['imports']
+        label = df_parsed['label']
+
+        label_iter = iter(list(label.values()))
+        for value , value_2 in imports.items():
+            exist = False
+            for value_2, value_3 in value_2.items():
+                for item in value_3:
+                    exist = True
+                    _ = f.write('%s ' % item)
+            if exist:
+                _ = f.write('-SEP- %d \n' %next(label_iter))
+
+    
     # Garbage collection
     #input('test')
     del df
