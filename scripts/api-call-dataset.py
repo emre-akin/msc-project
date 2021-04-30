@@ -7,35 +7,28 @@ for zipLocation in sys.argv[1:]:
     pzf = PyZipFile(zipLocation)
     pzf.extractall()
 
-# Import data set
+# Import dataset
 df = pd.read_csv("all_analysis_data.txt", names=["API Calls"])
 # Import labels
 labels = pd.read_csv("labels.csv", names=["Malware Type"])
 
-len(df)
-len(labels)
-
-'''
-df.info(verbose=True)
-df.head(1)
-'''
+assert len(df) == len(labels)
 
 # Combine dataframes
 df = df.join(labels)
 
-'''
-df.head(10)
+# Factorise labels
+df['Malware Type'] = pd.factorize(df['Malware Type'])[0]
+
+df.head()
 df.describe()
-df.iloc[[0],[0]]
-'''
 
 # Create train and test data sets / 90% - 10%
-train = df[:6397]
-test = df[6397:]
+train=df.sample(frac=0.9,random_state=200) #random state is a seed value
+test=df.drop(train.index)
 
-len(train)
-len(test)
+assert len(df) == len(train) + len(test)
 
 # Save train and test data sets
-train.to_csv("train.csv", index=None)
-test.to_csv("test.csv", index=None)
+train.to_csv('target_train_numerized.txt', index=False, header=False)
+test.to_csv('target_test_numerized.txt', index=False, header=False)
