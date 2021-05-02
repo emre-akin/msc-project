@@ -1,3 +1,12 @@
+###########################################################################################################
+###  EMBER dataset reference
+#    Title: EMBER: An Open Dataset for Training Static PE Malware Machine Learning Models
+#    Author: Hyrum S. Anderson, Phil Roth
+#    Date: 2018
+#    Availability: https://github.com/elastic/ember
+###########################################################################################################
+
+import os
 import pandas as pd
 
 pd.set_option('display.max_colwidth', None)
@@ -33,6 +42,9 @@ df = df[df.label == 1]
 
 # Drop label column
 df.drop(columns=['label'], inplace=True)
+
+# Change directory
+os.chdir('../../')
 
 # Save dataset
 df.to_csv('source_final.txt', index=False, header=False)

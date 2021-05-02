@@ -1,3 +1,11 @@
+###########################################################################################################
+###  Mal-API-2019 dataset reference
+#    Title: Deep learning based Sequential model for malware analysis using Windows exe API Calls
+#    Author: Ahmet Faruk Yazı, Ferhat Ozgur Catak, Ensar Gul
+#    Date: 2020
+#    Availability: https://github.com/ocatak/malware_api_class
+###########################################################################################################
+
 import sys
 from zipfile import PyZipFile
 import pandas as pd

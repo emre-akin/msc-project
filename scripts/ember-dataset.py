@@ -1,11 +1,16 @@
+###########################################################################################################
+###  EMBER dataset reference
+#    Title: EMBER: An Open Dataset for Training Static PE Malware Machine Learning Models
+#    Author: Hyrum S. Anderson, Phil Roth
+#    Date: 2018
+#    Availability: https://github.com/elastic/ember
+###########################################################################################################
+
 import os
 import pandas as pd
 import gc
 import json
 
-# Change directory
-os.chdir('datasets/ember-dataset/ember2018/')
-os.listdir()
 features_path = []
 features_path = os.listdir()
 

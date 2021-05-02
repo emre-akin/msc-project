@@ -1,7 +1,17 @@
 #!/bin/bash
-# Please reference the datasets before using
-# ember dataset: https://github.com/elastic/ember
-# api-call dataset: https://github.com/ocatak/malware_api_class
+###########################################################################################################
+###  EMBER dataset reference
+#    Title: EMBER: An Open Dataset for Training Static PE Malware Machine Learning Models
+#    Author: Hyrum S. Anderson, Phil Roth
+#    Date: 2018
+#    Availability: https://github.com/elastic/ember
+###########################################################################################################
+###  Mal-API-2019 dataset reference
+#    Title: Deep learning based Sequential model for malware analysis using Windows exe API Calls
+#    Author: Ahmet Faruk Yazı, Ferhat Ozgur Catak, Ensar Gul
+#    Date: 2020
+#    Availability: https://github.com/ocatak/malware_api_class
+###########################################################################################################
 
 cd ..
 mkdir datasets
