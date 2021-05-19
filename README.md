@@ -2,4 +2,8 @@
 
 7COM1070 - Cyber Security Masters Project
 
-## Deep Transfer Learning for Malware Classification
+## Transfer Learning for Multiclass Malware Classification
+
+In this study, we experimented transfer learning for multiclass malware classification. We used the Ember dataset(Anderson & Roth, 2018) as our source dataset to make transfer learning to improve our success on a smaller target dataset: Windows Malware Dataset with PE API Calls(Catak & Yazi, 2019). We trained a word embedding by using GloVe model(Pennington, Socher & Manning, 2014) on the source domain and we used Mittens(Dingwall & Potts, 2018) to fine-tune that word embedding on the target dataset. We used BiLSTM architecture(Schuster & Paliwal, 1997) for our models to achieve higher results than the regular LSTM models(Hochreiter & Schmidhuber, 1997). We trained and tested 3 different setups on the target dataset: the Base BiLSTM model trained only on the target, model with transfer learning which was trained on the source dataset and model with transfer learning which was trained on the source and fine-tuned on the target dataset. Model with transfer learning and fine-tuning outperformed the model with transfer learning. However, the base BiLSTM model which was trained only on the target dataset outperformed both models with transfer learning. So, there was a negative transfer for this task with the given domains however, our BiLSTM model outperformed the authors’ model(Catak & Yazi, 2019). Our model achieved a 0.11 higher f1 score and accuracy than the authors' best model in the multi-class malware classification task.
+
+We share an Jupyter Notebook for easier code execution. Our experiment results can also be found on the Jupyter Notebook.
